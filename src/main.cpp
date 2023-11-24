@@ -2,6 +2,7 @@
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
 #include <WiFi.h>
 #include <WebServer.h>
+#include <ArduinoJson.h>
 
 /**
  * LED CONFIGURATION
@@ -89,11 +90,28 @@ void handlePostBitmap() {
     return;
   }
 
-  String body = server.arg("plain");
+  String bodyString = server.arg("plain");
 
-  Serial.print(body);
+  Serial.print(bodyString);
 
+  StaticJsonDocument<768> body;
+  DeserializationError error = deserializeJson(body, bodyString);
+  if (error) {
+    Serial.print("deserializeJson() failed: ");
+    Serial.println(error.c_str());
+    return;
+  }
 
+  
+
+  dma_display->drawBitmap(
+    body["x"],
+    body["y"], 
+     
+    body["w"], 
+    body["h"], 
+    body["color"]
+  )
 }
 
 void setupWebServer() {
@@ -117,7 +135,4 @@ void loop() {
   //check for requests
   server.handleClient();
   delay(2);
-
-  //example code
-  dma_display->clearScreen();
 }
