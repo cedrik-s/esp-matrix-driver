@@ -1,6 +1,10 @@
 
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
+#include <WiFi.h>
 
+/**
+ * LED CONFIGURATION
+ */
 
 #define PANEL_RES_X 128      // Number of pixels wide of each INDIVIDUAL panel module. 
 #define PANEL_RES_Y 64     // Number of pixels tall of each INDIVIDUAL panel module.
@@ -29,7 +33,15 @@ uint16_t myRED = dma_display->color565(255, 0, 0);
 uint16_t myGREEN = dma_display->color565(0, 255, 0);
 uint16_t myBLUE = dma_display->color565(0, 0, 255);
 
-void setup() {
+
+/**
+ * WLAN CONFIGURATION
+ */
+
+const char* ssid = "your_wifi_ssid";
+const char* password = "your_wifi_password";
+
+void setupGFX() {
 
   HUB75_I2S_CFG::i2s_pins _pins={R1_PIN, G1_PIN, B1_PIN, R2_PIN, G2_PIN, B2_PIN, A_PIN, B_PIN, C_PIN, D_PIN, E_PIN, LAT_PIN, OE_PIN, CLK_PIN};
 
@@ -48,7 +60,25 @@ void setup() {
   dma_display->clearScreen();
 }
 
-uint8_t wheelval = 0;
+void setupWiFi() {
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.println("Connecting to WiFi..");
+  }
+  Serial.print("Connected to the WiFi network");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
+void setup() {
+  Serial.begin(115200);
+  setupGFX();
+  setupWiFi();
+}
+
 void loop() {
 
   //example code
