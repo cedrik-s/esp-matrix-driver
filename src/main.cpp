@@ -1,6 +1,7 @@
 
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
 #include <WiFi.h>
+#include <WebServer.h>
 
 /**
  * LED CONFIGURATION
@@ -41,6 +42,12 @@ uint16_t myBLUE = dma_display->color565(0, 0, 255);
 const char* ssid = "your_wifi_ssid";
 const char* password = "your_wifi_password";
 
+/**
+ * WebServer Configuration
+ */
+#define PORT 80
+WebServer server(PORT);
+
 void setupGFX() {
 
   HUB75_I2S_CFG::i2s_pins _pins={R1_PIN, G1_PIN, B1_PIN, R2_PIN, G2_PIN, B2_PIN, A_PIN, B_PIN, C_PIN, D_PIN, E_PIN, LAT_PIN, OE_PIN, CLK_PIN};
@@ -73,29 +80,44 @@ void setupWiFi() {
   Serial.println(WiFi.localIP());
 }
 
+void handleNotFound() {
+  server.send(404);
+}
+
+void handlePostBitmap() {
+  if(server.uri() != "/bitmap"){
+    return;
+  }
+
+  String body = server.arg("plain");
+
+  Serial.print(body);
+
+
+}
+
+void setupWebServer() {
+  server.on("/bitmap", HTTP_POST, handlePostBitmap);
+  server.onNotFound(handleNotFound);
+
+  server.begin();
+}
+
 void setup() {
   Serial.begin(115200);
   setupGFX();
   setupWiFi();
+  setupWebServer();
 }
+
+
 
 void loop() {
 
+  //check for requests
+  server.handleClient();
+  delay(2);
+
   //example code
   dma_display->clearScreen();
-  dma_display->fillScreen(myWHITE);
-
-  delay(1000);
-  dma_display->clearScreen();
-  dma_display->fillScreen(myBLUE);
-
-  delay(1000);
-  dma_display->clearScreen();
-  dma_display->fillScreen(myGREEN);
-
-  delay(1000);
-  dma_display->clearScreen();
-  dma_display->fillScreen(myRED);
-
-  delay(1000);
 }
