@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController
 class TestController(val espHttpJsonClient: ESPHttpJsonClient) {
     @GetMapping("/test")
     fun test() {
-        return espHttpJsonClient.sentBitmap(BitmapDTO(BitmapData.generateFullBitMapData()));
+        return espHttpJsonClient.sentBitmap(BitmapDTO(BitmapData.generateFullBitMapData()))
     }
 }
