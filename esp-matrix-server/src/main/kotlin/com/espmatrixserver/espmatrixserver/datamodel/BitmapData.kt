@@ -17,11 +17,12 @@ class BitmapData(
             val bitmap = Array(64) { Array(128) { false } }
 
             bitmap.forEachIndexed{ indexRow, row ->
-                row[indexRow] = true
-                row[row.size-1 - indexRow] = true
+                row[0] = true
+                row[row.size-1] = true
+                row[row.size/2] = true
             }
             return BitmapData(0u, 0u,             1200u
-                , 64u, 128u, bitmap)
+                , 128u, 64u, bitmap)
         }
     }
 }
