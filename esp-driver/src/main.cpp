@@ -1,8 +1,9 @@
 
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
-#include <WiFi.h>
 #include <WebServer.h>
 #include <ArduinoJson.h>
+
+#include "wifi/wifi-setup.h"
 
 /**
  * LED CONFIGURATION
@@ -36,12 +37,7 @@ uint16_t myGREEN = dma_display->color565(0, 255, 0);
 uint16_t myBLUE = dma_display->color565(0, 0, 255);
 
 
-/**
- * WLAN CONFIGURATION
- */
 
-const char* ssid = "your_wifi_ssid";
-const char* password = "your_wifi_password";
 
 /**
  * WebServer Configuration
@@ -68,18 +64,7 @@ void setupGFX() {
   dma_display->clearScreen();
 }
 
-void setupWiFi() {
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.println("Connecting to WiFi..");
-  }
-  Serial.print("Connected to the WiFi network");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-}
+
 
 void handleNotFound() {
   server.send(404);
