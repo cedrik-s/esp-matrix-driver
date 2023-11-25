@@ -20,7 +20,8 @@ class BitmapData(
                 row[indexRow] = true;
                 row[row.size-1 - indexRow] = true;
             }
-            return BitmapData(0u, 0u, 45000u, 64u, 128u, bitmap);
+            return BitmapData(0u, 0u,             1200u
+                , 64u, 128u, bitmap);
         }
     }
 }
