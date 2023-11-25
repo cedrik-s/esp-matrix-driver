@@ -26,6 +26,8 @@ String get_wifi_status(int status)
     return "WL_CONNECTED";
   case WL_DISCONNECTED:
     return "WL_DISCONNECTED";
+  default:
+    return "UNKNOWN_STATUS!";
   }
 }
 
