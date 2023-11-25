@@ -102,16 +102,30 @@ void handlePostBitmap() {
     return;
   }
 
-  
+  const char* bitmap = body["bitmap"];
+  int x = body["x"];
+  int y = body["y"];
+  int w = body["w"]; 
+  int h = body["h"];
+  long color = body["color"];
+
+  Serial.println(bitmap);
+
+  dma_display->clearScreen();
 
   dma_display->drawBitmap(
-    body["x"],
-    body["y"], 
-     
-    body["w"], 
-    body["h"], 
-    body["color"]
-  )
+    x,
+    y, 
+    (unsigned char*) bitmap,
+    w,
+    h,
+    myRED
+  );
+
+  server.send(200);
+
+  delay(2000);
+  dma_display->fillScreen(myRED);
 }
 
 void setupWebServer() {
