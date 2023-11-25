@@ -128,8 +128,46 @@ void handlePostBitmap() {
   dma_display->fillScreen(myRED);
 }
 
+void handlePostLine() {
+  if(server.uri() != "/line"){
+    return;
+  }
+
+  String bodyString = server.arg("plain");
+
+  Serial.print(bodyString);
+
+  StaticJsonDocument<768> body;
+  DeserializationError error = deserializeJson(body, bodyString);
+  if (error) {
+    Serial.print("deserializeJson() failed: ");
+    Serial.println(error.c_str());
+    return;
+  }
+
+  int x = body["sx"];
+  int y = body["sy"];
+  int tx = body["tx"]; 
+  int ty = body["ty"];
+  long color = body["color"];
+
+  Serial.println(x);
+  Serial.println(y);
+  Serial.println(tx);
+  Serial.println(ty);
+  Serial.println(color);
+
+  dma_display->drawLine(x, y, tx, ty, color);
+  dma_display->drawLine(20, 20, 20, 40, myRED);
+
+  server.send(200);
+
+  delay(2000);
+}
+
 void setupWebServer() {
   server.on("/bitmap", HTTP_POST, handlePostBitmap);
+  server.on("/line", HTTP_POST, handlePostLine);
   server.onNotFound(handleNotFound);
 
   server.begin();
