@@ -21,15 +21,17 @@ class BitmapDTO//                builder.append(if (pixel) 1 else 0)  //Debug Co
         this.w = bitmapData.w
         this.h = bitmapData.h
         val list = ArrayList<Byte>()
+        var builder = StringBuilder()
         bitmapData.bitmap.forEach { row ->
             var newByte: Int = 0
             row.forEachIndexed { index: Int, pixel: Boolean ->
+                builder.append(if (pixel) 1 else 0)
+                newByte = (newByte shl 1) or if (pixel) 1 else 0
                 if (((index + 1) % 8) == 0) {
                     list.add(newByte.toByte())
                     newByte = 0
                 }
-//                builder.append(if (pixel) 1 else 0)  //Debug Code
-                newByte = (newByte shl 1) or if (pixel) 1 else 0
+
             }
         }
         bitmap = String(java.util.Base64.getEncoder().encode(list.toByteArray()))
