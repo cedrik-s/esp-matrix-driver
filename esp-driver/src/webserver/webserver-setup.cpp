@@ -21,7 +21,7 @@ void handlePostBitmap() {
 
   Serial.print(bodyString);
 
-  StaticJsonDocument<768> body;
+  StaticJsonDocument<2048> body;
   DeserializationError error = deserializeJson(body, bodyString);
   if (error) {
     Serial.print("deserializeJson() failed: ");
