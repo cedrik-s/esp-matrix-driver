@@ -14,14 +14,14 @@ class BitmapData(
     companion object {
         fun generateFullBitMapData(): BitmapData {
 
-            var bitmap = Array(64) { Array(128) { false } };
+            val bitmap = Array(64) { Array(128) { false } }
 
-            bitmap.forEachIndexed() { indexRow, row ->
-                row[indexRow] = true;
-                row[row.size-1 - indexRow] = true;
+            bitmap.forEachIndexed{ indexRow, row ->
+                row[indexRow] = true
+                row[row.size-1 - indexRow] = true
             }
             return BitmapData(0u, 0u,             1200u
-                , 64u, 128u, bitmap);
+                , 64u, 128u, bitmap)
         }
     }
 }
