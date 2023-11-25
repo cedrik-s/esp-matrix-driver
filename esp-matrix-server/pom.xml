@@ -14,7 +14,7 @@
 	<name>esp-matrix-server</name>
 	<description>Server to supply ESP with Commands for displaying on the RGB matrix</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 		<kotlin.version>1.9.20</kotlin.version>
 	</properties>
 	<dependencies>
@@ -72,6 +72,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
