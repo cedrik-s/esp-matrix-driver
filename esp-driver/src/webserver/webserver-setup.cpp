@@ -1,6 +1,7 @@
 #include <ArduinoJson.h>
 #include <WebServer.h>
 #include "../gfx/gfx-setup.h"
+#include "base64.h"
 
 /**
  * WebServer Configuration
@@ -13,7 +14,7 @@ void handleNotFound() {
 }
 
 void handlePostBitmap() {
-  if(server.uri() != "/bitmap"){
+    if(server.uri() != "/bitmap"){
     return;
   }
 
@@ -29,7 +30,7 @@ void handlePostBitmap() {
     return;
   }
 
-  const char* bitmap = body["bitmap"];
+  const char* bitmap = base64_decode(body["bitmap"],true).c_str();
   int x = body["x"];
   int y = body["y"];
   int w = body["w"]; 
@@ -51,8 +52,6 @@ void handlePostBitmap() {
 
   server.send(200);
 
-  delay(2000);
-  dma_display->fillScreen(myRED);
 }
 
 void handlePostLine() {
