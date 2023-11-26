@@ -5,7 +5,7 @@
 #include "base64.h"
 
 void handlePostBitmap() {
-    if(server.uri() != "/bitmap"){
+  if(server.uri() != "/bitmap"){
     return;
   }
 

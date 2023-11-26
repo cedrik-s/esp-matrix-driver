@@ -5,6 +5,7 @@
 #include "lineHandler.h"
 #include "bitmapHandler.h"
 #include "clearScreenHandler.h"
+#include "brightnessHandler.h"
 
 /**
  * WebServer Configuration
@@ -20,6 +21,7 @@ void setupWebServer() {
   server.on("/bitmap", HTTP_POST, handlePostBitmap);
   server.on("/line", HTTP_POST, handlePostLine);
   server.on("/clearScreen", HTTP_POST, handleClearScreen);
+  server.on("/brightness", HTTP_POST, handlePostBrightness);
   
   server.onNotFound(handleNotFound);
 
