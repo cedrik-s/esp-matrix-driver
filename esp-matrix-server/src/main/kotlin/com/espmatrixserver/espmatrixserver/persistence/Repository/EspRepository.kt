@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface EspRepository : JpaRepository<Esp, String>, CrudRepository<Esp, String> {
+    fun getByMacAddress(macAddress: String): Esp?
 }

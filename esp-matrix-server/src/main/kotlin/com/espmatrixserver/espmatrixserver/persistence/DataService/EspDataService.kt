@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service
 class EspDataService(val espRepository: EspRepository, val userDataService: UserDataService) {
     fun createEsp(registeringDTO: EspRegisteringDTO): Esp {
         return this.createEsp(
-            registeringDTO.ipAddress,
             registeringDTO.macAddress,
+            registeringDTO.ipAddress,
             registeringDTO.port,
             registeringDTO.height,
             registeringDTO.width
@@ -27,7 +27,7 @@ class EspDataService(val espRepository: EspRepository, val userDataService: User
     }
 
     fun loadEsp(macAddress: String): Esp? {
-        return espRepository.getReferenceById(macAddress)
+        return espRepository.getByMacAddress(macAddress)
     }
 
     fun updateEsp(esp: Esp): Esp {
