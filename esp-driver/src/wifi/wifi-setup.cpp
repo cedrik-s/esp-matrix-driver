@@ -1,6 +1,8 @@
 #include <WiFi.h>
 #include <configuration.h>
 
+#define CONNECTION_TIMEOUT 20
+
 /**
  * WLAN CONFIGURATION
  */
@@ -38,12 +40,17 @@ void setupWiFi()
   Serial.println("\nConnecting");
   Serial.println(get_wifi_status(status));
   WiFi.begin(ssid, password);
+  int timeout_counter = 0;
   while (status != WL_CONNECTED)
   {
     digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN)); 
     delay(500);
+    timeout_counter++;
     status = WiFi.status();
     Serial.println(get_wifi_status(status));
+    if(timeout_counter>=CONNECTION_TIMEOUT*2){
+      ESP.restart();
+    }
   }
   digitalWrite(LED_BUILTIN, LOW); 
   Serial.print("Connected to the WiFi network");
