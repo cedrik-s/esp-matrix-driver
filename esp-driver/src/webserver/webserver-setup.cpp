@@ -71,10 +71,10 @@ void handlePostLine() {
     return;
   }
 
-  int x = body["sx"];
-  int y = body["sy"];
-  int tx = body["tx"]; 
-  int ty = body["ty"];
+  int x = body["xStart"];
+  int y = body["yStart"];
+  int tx = body["xEnd"]; 
+  int ty = body["yEnd"];
   long color = body["color"];
 
   Serial.println(x);
