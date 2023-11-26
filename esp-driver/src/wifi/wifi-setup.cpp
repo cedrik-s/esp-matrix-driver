@@ -33,12 +33,14 @@ String get_wifi_status(int status)
 
 void setupWiFi()
 {
+  pinMode(LED_BUILTIN, OUTPUT);
   int status = WL_IDLE_STATUS;
   Serial.println("\nConnecting");
   Serial.println(get_wifi_status(status));
   WiFi.begin(ssid, password);
   while (status != WL_CONNECTED)
   {
+    digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN)); 
     delay(500);
     status = WiFi.status();
     Serial.println(get_wifi_status(status));
