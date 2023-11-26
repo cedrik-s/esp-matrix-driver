@@ -6,11 +6,11 @@
 #include "bitmapHandler.h"
 #include "clearScreenHandler.h"
 #include "brightnessHandler.h"
+#include "webserver-setup.h"
 
 /**
  * WebServer Configuration
  */
-#define PORT 80
 WebServer server(PORT);
 
 void handleNotFound() {
