@@ -1,5 +1,5 @@
 #include <WiFi.h>
-#include "wifi-credentials.h"
+#include <configuration.h>
 
 /**
  * WLAN CONFIGURATION

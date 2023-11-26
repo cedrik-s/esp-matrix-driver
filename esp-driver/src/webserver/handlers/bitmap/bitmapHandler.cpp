@@ -2,7 +2,7 @@
 #include <WebServer.h>
 #include "webserver-setup.h"
 #include "gfx-setup.h"
-#include "base64.h"
+#include "base64_2.h"
 
 void handlePostBitmap() {
   if(server.uri() != "/bitmap"){
