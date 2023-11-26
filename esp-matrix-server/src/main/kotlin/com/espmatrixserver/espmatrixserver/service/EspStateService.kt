@@ -1,13 +1,14 @@
 package com.espmatrixserver.espmatrixserver.service
 
-import com.espmatrixserver.espmatrixserver.DisplayingModules.TestDisplayModule
+import com.espmatrixserver.espmatrixserver.DisplayingModules.DrawRandomLinesDisplayModule
+import com.espmatrixserver.espmatrixserver.client.ESPHttpJsonClient
 import com.espmatrixserver.espmatrixserver.dto.EspRegisteringDTO
 import com.espmatrixserver.espmatrixserver.persistence.DataService.EspDataService
 import com.espmatrixserver.espmatrixserver.persistence.entity.Esp
 import org.springframework.stereotype.Service
 
 @Service
-class EspStateService(val espDataService: EspDataService) {
+class EspStateService(val espDataService: EspDataService,val espHttpJsonClient: ESPHttpJsonClient) {
     var espStatesByMac: MutableMap<String, EspState> = mutableMapOf()
 
     fun register(registeringDTO: EspRegisteringDTO): Esp {
@@ -32,7 +33,8 @@ class EspStateService(val espDataService: EspDataService) {
         return esp
     }
     fun startNewStateThread(esp: Esp) {
-        espStatesByMac[esp.macAddress] = EspState(TestDisplayModule(),esp)
+        espStatesByMac[esp.macAddress] = EspState(DrawRandomLinesDisplayModule(espHttpJsonClient,esp),esp)
+        Thread(espStatesByMac[esp.macAddress]).start()
     }
 
 
