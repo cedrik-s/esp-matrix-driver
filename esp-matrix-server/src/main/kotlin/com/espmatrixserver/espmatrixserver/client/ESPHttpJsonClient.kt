@@ -1,6 +1,7 @@
 package com.espmatrixserver.espmatrixserver.client
 
 import com.espmatrixserver.espmatrixserver.dto.BitmapDTO
+import com.espmatrixserver.espmatrixserver.dto.BrightnessDTO
 import com.espmatrixserver.espmatrixserver.dto.drawDTO
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.Gson
@@ -41,6 +42,18 @@ class ESPHttpJsonClient(espConfiguration: ESPConfiguration) {
         var response = client.newCall(
             Request.Builder()
                 .url("$baseUrl/line")
+                .post(reqBody)
+                .build()
+        ).execute()
+
+        logger.info(response.toString());
+    }
+
+    fun setBrightness(brightness: UShort) {
+        val reqBody = gson.toJson(BrightnessDTO(brightness)).toRequestBody("application/json".toMediaType())
+        var response = client.newCall(
+            Request.Builder()
+                .url("$baseUrl/brightness")
                 .post(reqBody)
                 .build()
         ).execute()

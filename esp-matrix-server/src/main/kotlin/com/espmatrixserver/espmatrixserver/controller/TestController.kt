@@ -16,4 +16,10 @@ class TestController(val espHttpJsonClient: ESPHttpJsonClient) {
     fun drawLine() {
         return espHttpJsonClient.drawLine(32,32,40,40,0x2392.toUShort())
     }
+
+    @GetMapping("/setBrightness")
+    fun setBrightness() {
+        return espHttpJsonClient.setBrightness(20.toUShort())
+    }
+
 }
