@@ -5,8 +5,8 @@
  * WLAN CONFIGURATION
  */
 
-const char *ssid = "FRITZ-HALL-Home";
-const char *password = "45396262343241175512";
+const char *ssid = WIFI_SSID;
+const char *password = WIFI_PASSWORD;
 
 String get_wifi_status(int status)
 {
