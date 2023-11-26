@@ -34,7 +34,6 @@ void handlePostLine() {
   Serial.println(color);
 
   dma_display->drawLine(x, y, tx, ty, color);
-  dma_display->drawLine(20, 20, 20, 40, myRED);
 
   server.send(200);
 

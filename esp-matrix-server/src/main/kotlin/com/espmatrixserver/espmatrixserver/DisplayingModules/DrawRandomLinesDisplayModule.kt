@@ -9,10 +9,10 @@ class DrawRandomLinesDisplayModule(val espHttpJsonClient: ESPHttpJsonClient, val
     override fun loop() {
 
         espHttpJsonClient.drawLine(
-            (Random.nextInt() % esp.width).toShort(),
-            (Random.nextInt() % esp.height).toShort(),
-            (Random.nextInt() % esp.width).toShort(),
-            (Random.nextInt() % esp.height).toShort(),
+            Random.nextInt(0,esp.width.toInt()).toShort(),
+            Random.nextInt(0,esp.height.toInt()).toShort(),
+            Random.nextInt(0,esp.width.toInt()).toShort(),
+            Random.nextInt(0,esp.height.toInt()).toShort(),
             Random.nextInt().toUShort(),
             esp
         )
