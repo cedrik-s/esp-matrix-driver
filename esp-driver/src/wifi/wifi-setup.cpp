@@ -45,6 +45,7 @@ void setupWiFi()
     status = WiFi.status();
     Serial.println(get_wifi_status(status));
   }
+  digitalWrite(LED_BUILTIN, LOW); 
   Serial.print("Connected to the WiFi network");
   Serial.println(ssid);
   Serial.print("IP address: ");
