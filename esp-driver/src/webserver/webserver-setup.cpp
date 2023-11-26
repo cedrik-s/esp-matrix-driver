@@ -1,6 +1,6 @@
 #include <ArduinoJson.h>
 #include <WebServer.h>
-#include "../gfx/gfx-setup.h"
+#include "gfx-setup.h"
 #include "base64.h"
 
 /**

@@ -1,6 +1,6 @@
-#include "wifi/wifi-setup.h"
-#include "gfx/gfx-setup.h"
-#include "webserver/webserver-setup.h"
+#include "wifi-setup.h"
+#include "gfx-setup.h"
+#include "webserver-setup.h"
 
 void setup() {
   Serial.begin(115200);
