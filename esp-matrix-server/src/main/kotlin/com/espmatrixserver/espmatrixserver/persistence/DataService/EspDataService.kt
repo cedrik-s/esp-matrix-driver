@@ -9,10 +9,17 @@ import org.springframework.stereotype.Service
 @Service
 class EspDataService(val espRepository: EspRepository, val userDataService: UserDataService) {
     fun createEsp(registeringDTO: EspRegisteringDTO): Esp {
-        return this.createEsp(registeringDTO.ipAddress, registeringDTO.macAddress,registeringDTO.port,registeringDTO.height,registeringDTO.width);
+        return this.createEsp(
+            registeringDTO.ipAddress,
+            registeringDTO.macAddress,
+            registeringDTO.port,
+            registeringDTO.height,
+            registeringDTO.width
+        )
     }
+
     fun createEsp(macAddress: String, ipAddress: String, port: Int, height: Short, width: Short): Esp {
-        return this.createEsp(macAddress, ipAddress,port,height,width, userDataService.loadDefaultUser());
+        return this.createEsp(macAddress, ipAddress, port, height, width, userDataService.loadDefaultUser())
     }
 
     fun createEsp(macAddress: String, ipAddress: String, port: Int, height: Short, width: Short, owner: User): Esp {
@@ -26,6 +33,7 @@ class EspDataService(val espRepository: EspRepository, val userDataService: User
     fun updateEsp(esp: Esp): Esp {
         return espRepository.save(esp)
     }
+
     fun loadAllEsp(): List<Esp> {
         return espRepository.findAll()
     }
