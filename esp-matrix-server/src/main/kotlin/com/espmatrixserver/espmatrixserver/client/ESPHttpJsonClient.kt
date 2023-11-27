@@ -16,52 +16,52 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class ESPHttpJsonClient() {
+class ESPHttpJsonClient() : ESPClient{
 
-    private val logger: Logger = LoggerFactory.getLogger(this.javaClass)
+private val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
-    val client = OkHttpClient.Builder()
-        .protocols(listOf(Protocol.HTTP_1_1))
-        .build();
+val client = OkHttpClient.Builder()
+    .protocols(listOf(Protocol.HTTP_1_1))
+    .build()
 
-    val gson = Gson()
-    fun generateBaseUrl(esp: Esp, path: String): String {
-        return "http://${esp.ipAddress}:${esp.port}$path"
-    }
+val gson = Gson()
+fun generateBaseUrl(esp: Esp, path: String): String {
+    return "http://${esp.ipAddress}:${esp.port}$path"
+}
 
-    fun drawBitMap(bitmap: BitmapDTO, esp: Esp) {
-        val reqBody = gson.toJson(bitmap).toRequestBody("application/json".toMediaType())
-        val response = client.newCall(
-            Request.Builder()
-                .url(generateBaseUrl(esp, "/bitmap"))
-                .post(reqBody)
-                .build()
-        ).execute()
+override fun drawBitMap(bitmap: BitmapDTO, esp: Esp) {
+    val reqBody = gson.toJson(bitmap).toRequestBody("application/json".toMediaType())
+    val response = client.newCall(
+        Request.Builder()
+            .url(generateBaseUrl(esp, "/bitmap"))
+            .post(reqBody)
+            .build()
+    ).execute()
 
-        logger.info(response.toString())
-    }
+    logger.info(response.toString())
+}
 
-    fun drawLine(x0: Short, y0: Short, x1: Short, y1: Short, color: UShort, esp: Esp) {
-        val reqBody = gson.toJson(drawDTO(x0, y0, x1, y1, color)).toRequestBody("application/json".toMediaType())
-        val response = client.newCall(
-            Request.Builder()
-                .url(generateBaseUrl(esp, "/line"))
-                .post(reqBody)
-                .build()
-        ).execute()
+override fun drawLine(x1: Short, y1: Short, x2: Short, y2: Short, color: UShort, esp: Esp) {
+    val reqBody = gson.toJson(drawDTO(x1, y1, x2, y2, color)).toRequestBody("application/json".toMediaType())
+    val response = client.newCall(
+        Request.Builder()
+            .url(generateBaseUrl(esp, "/line"))
+            .post(reqBody)
+            .build()
+    ).execute()
 
-        logger.info(response.toString())
-    }
+    logger.info(response.toString())
+}
 
-    fun setBrightness(brightness: UShort,esp:Esp) {
-        val reqBody = gson.toJson(BrightnessDTO(brightness)).toRequestBody("application/json".toMediaType())
-        val response = client.newCall(
-            Request.Builder()
-                .url(generateBaseUrl(esp, "/brightness"))
-                .post(reqBody)
-                .build()
-        ).execute()
+override fun setBrightness(brightness: UShort, esp: Esp) {
+    val reqBody = gson.toJson(BrightnessDTO(brightness)).toRequestBody("application/json".toMediaType())
+    val response = client.newCall(
+        Request.Builder()
+            .url(generateBaseUrl(esp, "/brightness"))
+            .post(reqBody)
+            .build()
+    ).execute()
 
-        logger.info(response.toString())
-    }
+    logger.info(response.toString())
+}
 }
