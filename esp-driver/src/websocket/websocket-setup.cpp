@@ -53,47 +53,66 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
         {
 
             Serial.printf("[WSc] Subscribing \n");
-            String msg = "SUBSCRIBE\nid:sub-0\ndestination:/topic/test\n\n";
+            String msg = "SUBSCRIBE\nid:sub-0\ndestination:/client/drawInstructions\n\n";
             sendMessage(msg);
             delay(1000);
 
             Serial.printf("[WSc] Send Registration \n");
-            msg = "SEND\ndestination:/app/hello\n\n{\"message\":\"Registration!\"}";
+            msg = "SEND\ndestination:/server/drawInstructions\n\n{\"message\":\"Registration!\"}";
             sendMessage(msg);
             delay(1000);
         }
         else
         {
             std::string bodyString = std::string((char *)payload);
-            bodyString = bodyString.substr(bodyString.find("\n\n"),bodyString.size());
-            
-
-            StaticJsonDocument<768> body;
-            DeserializationError error = deserializeJson(body, bodyString);
-            if (error)
+            bodyString = bodyString.substr(bodyString.find("\n\n"), bodyString.size());
+            int endPos = bodyString.find(";;");
+            while (endPos > 0)
             {
-                Serial.print("deserializeJson() failed: ");
-                Serial.println(error.c_str());
-                return;
+                std::string curString = bodyString.substr(0, endPos);
+                Serial.println("curString");
+                Serial.println(curString.c_str());
+                StaticJsonDocument<768> body;
+                DeserializationError error = deserializeJson(body, bodyString);
+                if (error)
+                {
+                    Serial.print("deserializeJson() failed: ");
+                    Serial.println(error.c_str());
+                }
+                String method = body["method"];
+                int x = body["xStart"];
+                int y = body["yStart"];
+                int tx = body["xEnd"];
+                int ty = body["yEnd"];
+                long color = body["color"];
+
+                Serial.println(x);
+                Serial.println(y);
+                Serial.println(tx);
+                Serial.println(ty);
+                Serial.println(color);
+                if (method.equals("drawLine"))
+                {
+                    dma_display->drawLine(x, y, tx, ty, color);
+                } else if(method.equals("drawRect")){
+                    dma_display->drawRect(x, y, tx, ty, color);
+                } else if(method.equals("fillRect")){
+                    dma_display->fillRect(x, y, tx, ty, color);
+                } else if(method.equals("fillScreen")){
+                    dma_display->fillScreen(color);
+                } else if(method.equals("clearScreen")){
+                    dma_display->clearScreen();
+                } else{
+                    Serial.println("not a valid method");
+                }
+                bodyString = bodyString.substr(endPos + 2);
+                endPos = bodyString.find(";;");
             }
 
-            int x = body["xStart"];
-            int y = body["yStart"];
-            int tx = body["xEnd"];
-            int ty = body["yEnd"];
-            long color = body["color"];
-
-            Serial.println(x);
-            Serial.println(y);
-            Serial.println(tx);
-            Serial.println(ty);
-            Serial.println(color);
-
-            dma_display->drawLine(x, y, tx, ty, color);
             // do something with messages
-            
+
             Serial.printf("[WSc] Send Registration \n");
-            String msg = "SEND\ndestination:/app/hello\n\n{\"message\":\"Registration!\"}";
+            String msg = "SEND\ndestination:/server/drawInstructions\n\n{\"message\":\"Registration!\"}";
             sendMessage(msg);
         }
 

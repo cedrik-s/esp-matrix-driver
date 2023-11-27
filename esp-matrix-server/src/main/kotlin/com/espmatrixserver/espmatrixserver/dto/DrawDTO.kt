@@ -1,9 +1,10 @@
 package com.espmatrixserver.espmatrixserver.dto
 
-class drawDTO (val xStart: Short,
+class DrawDTO (val xStart: Short,
                val yStart: Short,
                val xEnd: Short,
                val yEnd: Short,
-               val color: UShort){
+               val color: UShort,
+               val method: String) {
 
 }

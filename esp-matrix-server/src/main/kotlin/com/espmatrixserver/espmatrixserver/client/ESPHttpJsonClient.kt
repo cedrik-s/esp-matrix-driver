@@ -2,7 +2,7 @@ package com.espmatrixserver.espmatrixserver.client
 
 import com.espmatrixserver.espmatrixserver.dto.BitmapDTO
 import com.espmatrixserver.espmatrixserver.dto.BrightnessDTO
-import com.espmatrixserver.espmatrixserver.dto.drawDTO
+import com.espmatrixserver.espmatrixserver.dto.DrawDTO
 import com.espmatrixserver.espmatrixserver.persistence.entity.Esp
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
@@ -42,7 +42,7 @@ override fun drawBitMap(bitmap: BitmapDTO, esp: Esp) {
 }
 
 override fun drawLine(x1: Short, y1: Short, x2: Short, y2: Short, color: UShort, esp: Esp) {
-    val reqBody = gson.toJson(drawDTO(x1, y1, x2, y2, color)).toRequestBody("application/json".toMediaType())
+    val reqBody = gson.toJson(DrawDTO(x1, y1, x2, y2, color,"drawLine")).toRequestBody("application/json".toMediaType())
     val response = client.newCall(
         Request.Builder()
             .url(generateBaseUrl(esp, "/line"))
