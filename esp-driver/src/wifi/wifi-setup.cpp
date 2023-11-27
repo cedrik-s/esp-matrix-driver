@@ -39,6 +39,7 @@ void setupWiFi()
   int status = WL_IDLE_STATUS;
   Serial.println("\nConnecting");
   Serial.println(get_wifi_status(status));
+  WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   int timeout_counter = 0;
   while (status != WL_CONNECTED)

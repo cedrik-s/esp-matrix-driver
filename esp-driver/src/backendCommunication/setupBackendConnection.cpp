@@ -22,7 +22,7 @@ short registerAtBackend()
     String body;
     serializeJson(doc, body);
 
-    http.begin(BACKEND_URL);
+    http.begin(BACKEND_URL_REGISTER);
     http.addHeader("Content-Type", "application/json");
     int httpResponseCode = http.POST(body);
 
