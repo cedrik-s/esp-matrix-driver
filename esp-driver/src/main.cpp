@@ -15,7 +15,6 @@ void setup() {
 void loop() {
   //check for requests
   server.handleClient();
-  ensureBackendConnection();
   websocketLoop();
   delay(2);
   

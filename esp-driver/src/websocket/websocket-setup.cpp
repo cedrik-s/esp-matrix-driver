@@ -4,8 +4,6 @@
 #include <ArduinoJson.h>
 #include "gfx-setup.h"
 
-
-
 WebSocketsClient webSocket;
 
 /**
@@ -58,7 +56,7 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
             delay(1000);
 
             Serial.printf("[WSc] Send Registration \n");
-            msg = "SEND\ndestination:/server/drawInstructions\n\n{\"message\":\"Registration!\"}";
+            msg = "SEND\ndestination:/server/RequestDrawInstructions\n\n{\"message\":\"Registration!\"}";
             sendMessage(msg);
             delay(1000);
         }
@@ -80,29 +78,75 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
                     Serial.println(error.c_str());
                 }
                 String method = body["method"];
-                int x = body["xStart"];
-                int y = body["yStart"];
-                int tx = body["xEnd"];
-                int ty = body["yEnd"];
-                long color = body["color"];
+                int xStart = body["xStart"];
+                int yStart = body["yStart"];
+                int xEnd = body["xEnd"];
+                int yEnd = body["yEnd"];
+                long colorR = body["colorR"];
+                long colorG = body["colorG"];
+                long colorB = body["colorB"];
+                int radius = body["radius"];
+                int intParam = body["intParam"];
+                int size = body["size"];
+                String stringParam = body["stringParam"];
 
-                Serial.println(x);
-                Serial.println(y);
-                Serial.println(tx);
-                Serial.println(ty);
+                uint16_t color = dma_display->color565(colorB, colorG, colorR);
+
+                Serial.println(xStart);
+                Serial.println(yStart);
+                Serial.println(xEnd);
+                Serial.println(yEnd);
                 Serial.println(color);
                 if (method.equals("drawLine"))
                 {
-                    dma_display->drawLine(x, y, tx, ty, color);
-                } else if(method.equals("drawRect")){
-                    dma_display->drawRect(x, y, tx, ty, color);
-                } else if(method.equals("fillRect")){
-                    dma_display->fillRect(x, y, tx, ty, color);
-                } else if(method.equals("fillScreen")){
+                    dma_display->drawLine(xStart, yStart, xEnd, yEnd, color);
+                }
+                else if (method.equals("drawRect"))
+                {
+                    dma_display->drawRect(xStart, yStart, xEnd, yEnd, color);
+                }
+                else if (method.equals("fillRect"))
+                {
+                    dma_display->fillRect(xStart, yStart, xEnd, yEnd, color);
+                }
+                else if (method.equals("fillScreen"))
+                {
                     dma_display->fillScreen(color);
-                } else if(method.equals("clearScreen")){
+                }
+                else if (method.equals("clearScreen"))
+                {
                     dma_display->clearScreen();
-                } else{
+                }
+                else if (method.equals("fillCircle"))
+                {
+                    dma_display->fillCircle(xStart, yStart, radius, color);
+                }
+                else if (method.equals("drawCircle"))
+                {
+                    dma_display->drawCircle(xStart, yStart, radius, color);
+                }
+                else if (method.equals("setBrightness"))
+                {
+                    dma_display->setBrightness(intParam);
+                }
+                else if (method.equals("drawText"))
+                {
+                    int xStartIterator = xStart;
+                    for (int i = 0; i < stringParam.length(); i++)
+                    {
+                        if (stringParam.charAt(i) == ' ')
+                        {
+                            xStartIterator += 3;
+                        }
+                        else
+                        {
+                            dma_display->drawChar(xStartIterator, yStart, stringParam.charAt(i), color, color, size);
+                            xStartIterator += 5 * size + 1;
+                        }
+                    }
+                }
+                else
+                {
                     Serial.println("not a valid method");
                 }
                 bodyString = bodyString.substr(endPos + 2);
@@ -112,7 +156,7 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
             // do something with messages
 
             Serial.printf("[WSc] Send Registration \n");
-            String msg = "SEND\ndestination:/server/drawInstructions\n\n{\"message\":\"Registration!\"}";
+            String msg = "SEND\ndestination:/server/RequestDrawInstructions\n\n{\"message\":\"Registration!\"}";
             sendMessage(msg);
         }
 

@@ -1,41 +1,20 @@
 package com.espmatrixserver.espmatrixserver.service
 
-import com.espmatrixserver.espmatrixserver.DisplayingModules.DrawRandomLinesDisplayModule
-import com.espmatrixserver.espmatrixserver.client.ESPWebSocketClient
-import com.espmatrixserver.espmatrixserver.dto.EspRegisteringDTO
-import com.espmatrixserver.espmatrixserver.persistence.DataService.EspDataService
-import com.espmatrixserver.espmatrixserver.persistence.entity.Esp
+import com.espmatrixserver.espmatrixserver.DisplayingModules.TestDisplayModule
+import com.espmatrixserver.espmatrixserver.dto.DrawDTO
 import org.springframework.stereotype.Service
 
 @Service
-class EspStateService(val espDataService: EspDataService, val espClient: ESPWebSocketClient) {
-    var espStatesByMac: MutableMap<String, EspState> = mutableMapOf()
-
-    fun register(registeringDTO: EspRegisteringDTO): Esp {
-        var esp = espDataService.loadEsp(registeringDTO.macAddress)
-        if (esp != null) {
-            esp.ipAddress = registeringDTO.ipAddress
-            esp.height = registeringDTO.height
-            esp.width = registeringDTO.width
-            esp.port = registeringDTO.port
-            espDataService.updateEsp(esp)
-        } else {
-            esp = espDataService.createEsp(registeringDTO)
-        }
-        val state = espStatesByMac[esp.macAddress]
-        if (state == null) {
-            startNewStateThread(esp)
-        } else {
-            if (state.isStopped) {
-            startNewStateThread(esp)
-            }
-        }
-        return esp
+class EspStateService() {
+    private var currentDisplayingModule: DisplayingModule = TestDisplayModule()
+    fun swapDisplayingModule(newDisplayingModule: DisplayingModule){
+        this.currentDisplayingModule = newDisplayingModule
     }
-
-    fun startNewStateThread(esp: Esp) {
-        espStatesByMac[esp.macAddress] = EspState(DrawRandomLinesDisplayModule(espClient, esp), esp)
-        Thread(espStatesByMac[esp.macAddress]).start()
+    fun generateFrame(): List<DrawDTO>{
+        return currentDisplayingModule.generateFrame()
+    }
+    fun getDelay(): Long{
+        return 2000L
     }
 
 
