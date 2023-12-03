@@ -15,7 +15,7 @@ class EspStateService() {
         return currentDisplayingModule.generateFrame()
     }
     fun getDelay(): Long{
-        return 2000L
+        return currentDisplayingModule.getDelay()
     }
 
 

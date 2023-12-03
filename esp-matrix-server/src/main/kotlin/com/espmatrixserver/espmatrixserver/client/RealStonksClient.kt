@@ -1,4 +1,4 @@
-package com.espmatrixserver.espmatrixserver.Client
+package com.espmatrixserver.espmatrixserver.client
 
 import com.espmatrixserver.espmatrixserver.dto.RealStonksDTO
 import org.springframework.beans.factory.annotation.Value
@@ -8,7 +8,7 @@ import org.springframework.web.client.RestClient
 // Client for the API https://rapidapi.com/amansharma2910/api/realstonks
 @Service
 class RealStonksClient {
-    @Value("\${esp-matrix-server.RealStonks.api-key:null}")
+    @Value("\${esp-matrix-server.RapidAPI.api-key:null}")
     val apiKey: String? = null
 
     val httpClient = RestClient.create()

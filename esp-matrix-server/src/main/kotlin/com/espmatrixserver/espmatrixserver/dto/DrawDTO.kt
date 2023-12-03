@@ -18,6 +18,9 @@ class DrawDTO private constructor (val xStart: Short,
         fun drawLine(xStart: Short,yStart: Short,xEnd: Short,yEnd: Short,color: Color): DrawDTO  {
             return DrawDTO(xStart,yStart,xEnd,yEnd,color,DrawMethod.LINE,0u,0u,"",0u)
         }
+        fun drawPixel(x: Short,y: Short,color: Color): DrawDTO  {
+            return DrawDTO(x,y,x,y,color,DrawMethod.LINE,0u,0u,"",0u)
+        }
         fun drawRect(xStart: Short,yStart: Short,xEnd: Short,yEnd: Short,color: Color): DrawDTO  {
             return DrawDTO(xStart,yStart,xEnd,yEnd,color,DrawMethod.RECT,0u,0u,"",0u)
         }

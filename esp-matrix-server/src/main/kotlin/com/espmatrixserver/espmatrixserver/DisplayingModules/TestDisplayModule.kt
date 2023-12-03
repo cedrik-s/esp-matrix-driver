@@ -24,4 +24,8 @@ class TestDisplayModule() : DisplayingModule {
         )
         return drawDTOs
     }
+
+    override fun getDelay(): Long {
+        return 1000L
+    }
 }

@@ -19,8 +19,12 @@ class WebSocketController(val espStateService: EspStateService) {
     @MessageMapping("/RequestDrawInstructions")
     @SendTo("/client/drawInstructions")
     fun pollInstructions(@Header("simpSessionId") sessionId: String, message: String): String {
+        logger.warn("received message: $message")
         Thread.sleep(espStateService.getDelay())
-        return parseToJson(espStateService.generateFrame())
+        logger.warn("generating frame")
+        val drawInstructions = espStateService.generateFrame()
+        logger.warn("sending frame with: ${drawInstructions.size} instructions")
+        return parseToJson(drawInstructions.subList(50,100))
     }
 
 
