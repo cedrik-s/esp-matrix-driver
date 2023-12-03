@@ -45,5 +45,11 @@ class DrawDTO private constructor (val xStart: Short,
         fun drawText(xStart: Short,yStart: Short,text:String,color: Color,size: UShort): DrawDTO  {
             return DrawDTO(xStart,yStart,0,0,color,DrawMethod.DRAWTEXT,0u,size,text,0u)
         }
+        fun drawText(xStart: Short,yStart: Short,text:String,color: Color): DrawDTO  {
+            return DrawDTO(xStart,yStart,0,0,color,DrawMethod.DRAWTEXT,0u,1u,text,0u)
+        }
+        fun drawText(text:String,color: Color): DrawDTO  {
+            return DrawDTO(0,0,0,0,color,DrawMethod.DRAWTEXT,0u,1u,text,0u)
+        }
     }
 }

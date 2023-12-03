@@ -14,7 +14,7 @@ class TestDisplayModule() : DisplayingModule {
             DrawDTO.drawText(0, 0, "This is a Test Message", Color.RED,1u)
         )
         drawDTOs.addLast(
-            DrawDTO.drawText(0, 9, "EThis is a Test Message", Color.GREEN,2u)
+            DrawDTO.drawText(0, 9, "This is a Test Message", Color.GREEN,2u)
         )
         drawDTOs.addLast(
             DrawDTO.drawText(0, 25, "This is a Test Message", Color.BLUE,3u)
