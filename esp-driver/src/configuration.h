@@ -2,6 +2,26 @@
 #define WIFI_PASSWORD "your_wifi_password"
 #define BACKEND_REGISTRATION_INTERVAL 20000
 #define BACKEND_URL "http://your_ip_and_port_here"
+/*
+Personal Configuration
+Only Add Attributes here if these need to be configured individually by each User else add them to the default parameters below
+
+Example in the following line:
+
+Please extend if you add new Configurations and only commit the Comment and not your private configuration
+
+#define WIFI_SSID "yourWifiSSID"
+#define WIFI_PASSWORD "yourWifiPassword"
+#define BACKEND_IP "IP Adress of your matrix-server" 
+
+*/
+
+/*
+General Configuration add everything which runs with default parameters here
+
+*/
+#define BACKEND_WS_PORT 8080
+#define STOMPURL "/ws"
 
 
 /**
