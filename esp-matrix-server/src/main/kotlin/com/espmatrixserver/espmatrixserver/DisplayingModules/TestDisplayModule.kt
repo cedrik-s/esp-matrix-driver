@@ -2,7 +2,6 @@ package com.espmatrixserver.espmatrixserver.DisplayingModules
 
 import com.espmatrixserver.espmatrixserver.dto.Color
 import com.espmatrixserver.espmatrixserver.dto.DrawDTO
-import com.espmatrixserver.espmatrixserver.service.DisplayingModule
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
