@@ -1,7 +1,3 @@
-#define WIFI_SSID "your_wifi_ssid"
-#define WIFI_PASSWORD "your_wifi_password"
-#define BACKEND_REGISTRATION_INTERVAL 20000
-#define BACKEND_URL "http://your_ip_and_port_here"
 /*
 Personal Configuration
 Only Add Attributes here if these need to be configured individually by each User else add them to the default parameters below
