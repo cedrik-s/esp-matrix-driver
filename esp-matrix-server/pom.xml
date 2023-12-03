@@ -79,9 +79,21 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.moshi</groupId>
+			<artifactId>moshi</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+		<dependency>
 			<groupId>com.github.crazzyghost</groupId>
 			<artifactId>alphavantage-java</artifactId>
-			<version>1.6.2</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/alphavantage-RapidAPI-1.6.1.jar</systemPath>
+			<version>1.6.1</version>
 		</dependency>
 
 	</dependencies>

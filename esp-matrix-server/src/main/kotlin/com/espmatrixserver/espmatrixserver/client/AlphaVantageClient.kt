@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 // AlphaVantage API client using https://github.com/crazzyghost/alphavantage-java
 @Service
 class AlphaVantageClient {
-    @Value("\${esp-matrix-server.AlphaVantage.api-key:null}")
+    @Value("\${esp-matrix-server.RapidAPI.api-key:null}")
     val apiKey: String? = null
     var cfg:Config? = null
 

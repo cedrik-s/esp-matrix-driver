@@ -1,13 +1,13 @@
 package com.espmatrixserver.espmatrixserver.service
 
+import com.espmatrixserver.espmatrixserver.DisplayingModules.AlphaVantageDisplayingModule
 import com.espmatrixserver.espmatrixserver.DisplayingModules.DisplayingModule
-import com.espmatrixserver.espmatrixserver.DisplayingModules.TestDisplayModule
 import com.espmatrixserver.espmatrixserver.dto.DrawDTO
 import org.springframework.stereotype.Service
 
 @Service
 class EspStateService() {
-    private var currentDisplayingModule: DisplayingModule = TestDisplayModule()
+    private var currentDisplayingModule: DisplayingModule = AlphaVantageDisplayingModule()
     fun swapDisplayingModule(newDisplayingModule: DisplayingModule){
         this.currentDisplayingModule = newDisplayingModule
     }
