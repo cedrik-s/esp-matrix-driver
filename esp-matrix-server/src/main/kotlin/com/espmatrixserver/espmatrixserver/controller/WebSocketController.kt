@@ -24,7 +24,7 @@ class WebSocketController(val espStateService: EspStateService) {
         logger.warn("generating frame")
         val drawInstructions = espStateService.generateFrame()
         logger.warn("sending frame with: ${drawInstructions.size} instructions")
-        return parseToJson(drawInstructions.subList(50,100))
+        return parseToJson(drawInstructions)
     }
 
 

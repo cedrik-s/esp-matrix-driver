@@ -19,7 +19,11 @@ class GenerateGraphService {
                 val y = yStart + height - (values[i].high - minValue) / (maxValue - minValue) * height
                 drawDTOs.add(DrawDTO.drawPixel(x.toShort(), y.toInt().toShort(), Color.BLUE))
             }
-            return drawDTOs
+            return if(drawDTOs.size>50){
+                drawDTOs.subList(drawDTOs.size-50,drawDTOs.size)
+            }else{
+                drawDTOs
+            }
         }
     }
 
